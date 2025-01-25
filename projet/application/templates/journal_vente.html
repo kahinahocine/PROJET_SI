@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'application/styles.css' %}">
+    <title>Journal des Ventes</title>
+    <style>
+    body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+main {
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.ventes-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.vente-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.vente-item strong {
+    color: #3498db;
+}
+
+.action-link {
+    color: #3498db;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: color 0.3s ease;
+}
+
+.action-link:hover {
+    color: #2077b5;
+}
+
+.total-ventes {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #3498db;
+    color: #fff;
+    border-radius: 5px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+    </style>
+</head>
+<body>
+    <nav class="nav-agriculture">
+        <a href="{% url 'index' %}">Accueil</a>
+        <a href="{% url 'centre_menu' centre_id=1 %}">Centre 1</a>
+        <a href="{% url 'centre_menu' centre_id=2 %}">Centre 2</a>
+        <a href="{% url 'centre_menu' centre_id=3 %}">Centre 3</a>
+        <a href="{% url 'analyse_ventes' %}">Anylse de ventes </a>
+        <a href="{% url 'top_fournisseurs' %}">top fournisseur </a>
+        <a href="{% url 'ventes_combinees' %}">taux de ventes  </a>
+        ventes-combinees/
+        
+    </nav>
+    <header>
+        <h1>Journal des Ventes</h1>
+    </header>
+
+    <main>
+        <form method="GET">
+            {{ form.date_vente }}
+            {{ form.client }}
+            {{ form.produit }}
+            <button type="submit">Filtrer</button>
+        </form>
+        <ul class="ventes-list">
+            {% for vente in ventes %}
+                <li class="vente-item">
+                    <strong>Date:</strong> {{ vente.DateV }}<br>
+                    <strong>Client:</strong> {{ vente.clientv.nomc }} {{ vente.clientv.prenomc }}<br>
+                    <strong>Produit:</strong> {{ vente.produitv.designation }}<br>
+                    <strong>Quantité:</strong> {{ vente.qtev }}<br>
+                    <strong>Prix unitaire:</strong> {{ vente.prixv }}<br>
+                    <strong>Montant total:</strong> {{ vente.montant_total_calcule }}<br>
+                    <a href="{% url 'supprimer_vente' vente.pk %}">Supprimer</a>
+                    <a href="{% url 'completer_credit' vente.pk %}">Compléter Paiement</a>
+                    <a href="{% url 'modifier_vente' vente.pk %}">modfier vente</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <p class="total-ventes">Valeur totale des ventes : {{ valeur_totale_ventes }} DA</p>
+    </main>
+
+    <footer>
+        <!-- Ajoutez tout contenu du pied de page ici -->
+    </footer>
+</body>
+</html>

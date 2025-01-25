@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'application/styles.css' %}">
+</head>
+<body>
+    <nav class="nav-agriculture">
+        <a href="{% url 'index' %}">Accueil</a>
+        <a href="{% url 'centre_menu' centre_id=1 %}">Centre 1</a>
+        <a href="{% url 'centre_menu' centre_id=2 %}">Centre 2</a>
+        <a href="{% url 'centre_menu' centre_id=3 %}">Centre 3</a>
+        <a href="{% url 'analyse_ventes' %}">Anylse de ventes </a>
+        <a href="{% url 'top_fournisseurs' %}">top fournisseur </a>
+        <a href="{% url 'ventes_combinees' %}">taux de ventes  </a>
+        ventes-combinees/
+        
+    </nav>
+    <div class="container">
+        <h1>Gestion des Produits</h1>
+
+        <!-- Formulaire pour Ajouter un Produit -->
+        <form method="post" action="{% url 'ajouter_produit' %}">
+            {% csrf_token %}
+            <label for="designation">Désignation:</label>
+            <input type="text" name="designation" required>
+            <label for="prix">Prix:</label>
+            <input type="text" name="prix" required>
+            <button type="submit">Ajouter Produit</button>
+        </form>
+
+        <!-- Formulaire pour Modifier un Produit -->
+        <form method="post" action="{% url 'modifier_produit' %}">
+            {% csrf_token %}
+            <label for="produit_id">ID du Produit à Modifier:</label>
+            <input type="text" name="produit_id" required>
+            <label for="new_designation">Nouvelle Désignation:</label>
+            <input type="text" name="new_designation">
+            <label for="new_prix">Nouveau Prix:</label>
+            <input type="text" name="new_prix">
+            <button type="submit">Modifier Produit</button>
+        </form>
+
+        <!-- Formulaire pour Supprimer un Produit -->
+        <form method="post" action="{% url 'supprimer_produit' %}">
+            {% csrf_token %}
+            <label for="produit_id_supprimer">ID du Produit à Supprimer:</label>
+            <input type="text" name="produit_id_supprimer" required>
+            <button type="submit">Supprimer Produit</button>
+        </form>
+
+        <!-- Formulaire pour Rechercher des Produits -->
+        <form method="get" action="{% url 'rechercher_produit' %}">
+            <label for="keyword">Mot-clé de Recherche:</label>
+            <input type="text" name="keyword" required>
+            <button type="submit">Rechercher Produits</button>
+        </form>
+
+        <!-- Liste de tous les Produits -->
+        <h2>Tous les Produits</h2>
+        <ul>
+            {% for produit in produits %}
+                <li>ID: {{ produit.id }}, Désignation: {{ produit.designation }}, Prix: {{ produit.prix }}</li>
+            {% endfor %}
+        </ul>
+
+        <!-- Bouton pour Imprimer les Produits -->
+        <form method="post" action="{% url 'imprimer_produits' %}">
+            {% csrf_token %}
+            <button type="submit">Imprimer Produits</button>
+        </form>
+    </div>
+</body>
+</html>

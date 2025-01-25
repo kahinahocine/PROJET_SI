@@ -1,0 +1,56 @@
+<!-- Inclure Chart.js et jQuery avec DataTables -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+<canvas id="tauxEvolutionAchats" width="400" height="200"></canvas>
+
+<!-- HTML pour le tableau des top fournisseurs -->
+<table id="topFournisseurs">
+  <thead>
+    <tr>
+      <th>Fournisseur</th>
+      <th>Total des achats</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for fournisseur in top_fournisseurs %}
+      <tr>
+        <td>{{ fournisseur.nomf }}</td>
+        <td>{{ fournisseur.total_achats }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<script>
+  // Script pour le graphique du taux d'évolution des achats
+  var ctx = document.getElementById('tauxEvolutionAchats').getContext('2d');
+  var tauxEvolutionData = {
+    labels: ['Mois courant', 'Mois précédent'],
+    datasets: [{
+      label: 'Taux d\'évolution des achats',
+      data: [{{ taux_evolution }}, 12],  // Remplacez 0 par la valeur du mois précédent
+      backgroundColor: [
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(255, 99, 132, 0.2)',
+      ],
+      borderColor: [
+        'rgba(75, 192, 192, 1)',
+        'rgba(255, 99, 132, 1)',
+      ],
+      borderWidth: 1
+    }]
+  };
+  var tauxEvolutionChart = new Chart(ctx, {
+    type: 'bar',
+    data: tauxEvolutionData
+  });
+</script>
+
+<!-- Script pour activer DataTables sur le tableau des top fournisseurs -->
+<script>
+  $(document).ready(function() {
+    $('#topFournisseurs').DataTable();
+  });
+</script>

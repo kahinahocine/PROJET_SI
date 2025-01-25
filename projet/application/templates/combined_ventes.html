@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'application/styles.css' %}">
+    <title>Ventes Combinées</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            margin-right: 10px;
+        }
+        input[type="number"], input[type="submit"] {
+            padding: 8px;
+            margin-right: 10px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f8f8;
+        }
+        .graph {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-agriculture">
+        <a href="{% url 'index' %}">Accueil</a>
+        <a href="{% url 'centre_menu' centre_id=1 %}">Centre 1</a>
+        <a href="{% url 'centre_menu' centre_id=2 %}">Centre 2</a>
+        <a href="{% url 'centre_menu' centre_id=3 %}">Centre 3</a>
+        <a href="{% url 'analyse_ventes' %}">Anylse de ventes </a>
+        <a href="{% url 'top_fournisseurs' %}">top fournisseur </a>
+        <a href="{% url 'ventes_combinees' %}">taux de ventes  </a>
+        ventes-combinees/
+        
+    </nav>
+    <div class="container">
+        <h1>Ventes dans les Centres et le Magasin Principal</h1>
+        <form method="get">
+            <label for="annee">Année:</label>
+            <input type="number" id="annee" name="annee" min="2000" max="2999" value="{{ selected_annee }}">
+            <label for="mois">Mois:</label>
+            <input type="number" id="mois" name="mois" min="1" max="12" value="{{ selected_mois }}">
+            <input type="submit" value="Filtrer">
+        </form>
+
+        <!-- Affichage des données pour chaque centre -->
+        {% for centre_data in centres_data %}
+        <div>
+            <h2>{{ centre_data.centre.designationc }}</h2>
+            <div class="graph">
+                <canvas id="graphiqueCentre{{ forloop.counter }}"></canvas>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- Affichage des données pour le magasin principal -->
+        <div>
+            <h2>Magasin Principal</h2>
+            <div class="graph">
+                <canvas id="graphiqueMagasinPrincipal"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Création des graphiques pour chaque centre
+        {% for centre_data in centres_data %}
+        var ctxCentre{{ forloop.counter }} = document.getElementById('graphiqueCentre{{ forloop.counter }}').getContext('2d');
+        var graphiqueCentre{{ forloop.counter }} = new Chart(ctxCentre{{ forloop.counter }}, {
+            type: 'doughnut',
+            data: {
+                labels: [{% for produit in centre_data.top_produits %}"{{ produit.produitv__designation }}", {% endfor %}],
+                datasets: [{
+                    label: 'Total Vendu',
+                    data: [{% for produit in centre_data.top_produits %}{{ produit.total_vendu }}, {% endfor %}],
+                    backgroundColor: ['red', 'blue', 'green', 'yellow', 'purple']
+                }]
+            }
+        });
+        {% endfor %}
+
+        // Création du graphique pour le magasin principal
+        var ctxMagasinPrincipal = document.getElementById('graphiqueMagasinPrincipal').getContext('2d');
+        var graphiqueMagasinPrincipal = new Chart(ctxMagasinPrincipal, {
+            type: 'doughnut',
+            data: {
+                labels: [{% for produit in top_produits_magasin %}"{{ produit.produitv__designation }}", {% endfor %}],
+                datasets: [{
+                    label: 'Total Vendu',
+                    data: [{% for produit in top_produits_magasin %}{{ produit.total_vendu }}, {% endfor %}],
+                    backgroundColor: ['red', 'blue', 'green', 'yellow', 'purple']
+                }]
+            }
+        });
+    </script>
+</body>
+</html>

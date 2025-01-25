@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'application/styles.css' %}">
+    <title>Supprimer Achat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        p {
+            color: #555;
+        }
+
+        form {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        form a {
+            text-decoration: none;
+            color: #333;
+            margin-right: 10px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f0f0f0;
+        }
+
+        form input[type="submit"] {
+            padding: 10px;
+            background-color: #d9534f;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav-agriculture">
+        <a href="{% url 'index' %}">Accueil</a>
+        <a href="{% url 'centre_menu' centre_id=1 %}">Centre 1</a>
+        <a href="{% url 'centre_menu' centre_id=2 %}">Centre 2</a>
+        <a href="{% url 'centre_menu' centre_id=3 %}">Centre 3</a>
+        <a href="{% url 'analyse_ventes' %}">Anylse de ventes </a>
+        <a href="{% url 'top_fournisseurs' %}">top fournisseur </a>
+        <a href="{% url 'ventes_combinees' %}">taux de ventes  </a>
+        ventes-combinees/
+        
+    </nav>
+    <h2>Supprimer Achat</h2>
+    <p>Confirmez-vous la suppression de cet achat ?</p>
+     <form method="POST">
+     {% csrf_token %}
+     {{ form.as_p}}
+     <a href="{% url 'journal_achats' %}"> Annuler</a>
+     <input type="submit" value="Delete">
+     </form>
+     
+ </body>
+ </html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>État du Stock - Centre {{ centre.designationc }} (PDF)</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header, h1, h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #336633;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>État du Stock - Centre {{ centre.designationc }}</h1>
+    </header>
+
+    <nav>
+        <!-- Ajoutez vos liens de navigation ici -->
+    </nav>
+
+    <section>
+        <h2>Produits en Stock</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Quantité en Stock</th>
+                    <!-- Ajoutez d'autres colonnes si nécessaire -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for produit_en_stock in produits_en_stock_centre %}
+                    <tr>
+                        <td>{{ produit_en_stock.produit_stocke.designation }}</td>
+                        <td>{{ produit_en_stock.quantite_en_stock_centre }}</td>
+                        <!-- Ajoutez d'autres cellules si nécessaire -->
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Ajoutez d'autres sections si nécessaire -->
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'application/styles.css' %}">
+    <title>Gérer Fournisseurs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        label {
+            margin-right: 10px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #336633;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #295429;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #336633;
+            margin-left: 10px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-agriculture">
+        <a href="{% url 'index' %}">Accueil</a>
+        <a href="{% url 'centre_menu' centre_id=1 %}">Centre 1</a>
+        <a href="{% url 'centre_menu' centre_id=2 %}">Centre 2</a>
+        <a href="{% url 'centre_menu' centre_id=3 %}">Centre 3</a>
+        <a href="{% url 'analyse_ventes' %}">Anylse de ventes </a>
+        <a href="{% url 'top_fournisseurs' %}">top fournisseur </a>
+        <a href="{% url 'ventes_combinees' %}">taux de ventes  </a>
+        ventes-combinees/
+        
+    </nav>
+    <h1>Gérer Fournisseurs</h1>
+
+
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Ajouter Fournisseur</button>
+    </form>
+
+    <h2>Tous les Fournisseurs</h2>
+    <ul>
+        {% for fournisseur in fournisseurs %}
+            <li>ID: {{ fournisseur.id }}, Nom: {{ fournisseur.nomf }}, Prénom: {{ fournisseur.prenomf }},
+                <a href="{% url 'modifier_fournisseur' fournisseur.pk %}">Modifier</a>
+                <a href="{% url 'supprimer_fournisseur' fournisseur.pk %}">Supprimer</a>
+            </li>
+        {% endfor %}
+
+        <form method="get" action="">
+            <label for="keyword">Mot-clé de Recherche:</label>
+            <input type="text" name="keyword" required>
+            <button type="submit">Rechercher Fournisseurs</button>
+        </form>
+    </ul>

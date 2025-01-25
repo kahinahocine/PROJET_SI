@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'application/styles.css' %}">
+    <title>Choix des Fonctionnalités</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        a {
+            display: block;
+            margin: 10px auto;
+            padding: 15px;
+            width: 80%;
+            text-align: center;
+            text-decoration: none;
+            background-color: #336633;
+            color: #fff;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        a:hover {
+            background-color: #255625;
+        }
+    </style>
+</head>
+<body>
+ 
+    <header>
+            
+        </nav>
+        <h1>Choix des Fonctionnalités</h1>
+    </header>
+    <h2>Choisissez une fonctionnalité pour le Centre {{ centre_id }}</h2>
+    <a href="{% url 'transferts_recus' centre_id=centre_id %}">Journal des Transferts</a>
+    <a href="{% url 'etat_stock_centre' centre_id=centre_id %}">État du Stock</a>
+    <a href="{% url 'effectuer_vente_centre' centre_id=centre_id %}">Effectuer une Vente</a>
+    <a href="{% url 'journal_vente_centre' centre_id=centre_id %}">Journal des Ventes</a>
+    <a href="{% url 'gerer_employes_centre' centre_id=centre_id %}">Gerer employe</a>
+</body>
+</html>

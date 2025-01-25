@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'application/styles.css' %}">
+    <title>Analyse des Ventes</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; }
+        .container { width: 80%; margin: 20px auto; background: #fff; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        canvas { max-width: 600px; height: 400px; margin: auto; }
+        form { margin-bottom: 20px; }
+        label { margin-right: 5px; }
+        input[type="submit"] { padding: 8px 15px; background-color: #007bff; border: none; border-radius: 4px; color: white; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form method="get">
+            <label for="annee">Année:</label>
+            <input type="number" id="annee" name="annee" value="{{ annee }}" placeholder="YYYY">
+            <label for="mois">Mois:</label>
+            <input type="number" id="mois" name="mois" value="{{ mois }}" placeholder="MM">
+            <input type="submit" value="Filtrer">
+        </form>
+
+        <h2>Bénéfice Total: {{ benefice_total }}</h2>
+        <h2>Taux d'évolution du bénéfice: {{ taux_evolution_benefice }}%</h2>
+
+        <!-- Graphique pour le bénéfice total -->
+        <h3>Graphique du Bénéfice Total</h3>
+        <canvas id="graphiqueBeneficeTotal"></canvas>
+
+        <!-- Graphique pour le taux d'évolution du bénéfice -->
+        <h3>Graphique du Taux d'Évolution du Bénéfice</h3>
+        <canvas id="graphiqueEvolutionBenefice"></canvas>
+    </div>
+
+    <script>
+        // Données pour les graphiques
+        var dataBeneficeTotal = {
+            labels: ["Bénéfice Total"],
+            datasets: [{
+                label: 'Bénéfice Total',
+                data: [{{ benefice_total }}],
+                backgroundColor: ['rgba(54, 162, 235, 0.2)'],
+                borderColor: ['rgba(54, 162, 235, 1)'],
+                borderWidth: 1
+            }]
+        };
+
+        var dataEvolutionBenefice = {
+            labels: ["Taux d'Évolution du Bénéfice"],
+            datasets: [{
+                label: 'Taux d\'Évolution',
+                data: [{{ taux_evolution_benefice }}],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)'],
+                borderWidth: 1
+            }]
+        };
+
+        // Initialisation des graphiques
+        var ctxBeneficeTotal = document.getElementById('graphiqueBeneficeTotal').getContext('2d');
+        new Chart(ctxBeneficeTotal, {
+            type: 'bar',
+            data: dataBeneficeTotal,
+            options: { scales: { y: { beginAtZero: true } } }
+        });
+
+        var ctxEvolutionBenefice = document.getElementById('graphiqueEvolutionBenefice').getContext('2d');
+        new Chart(ctxEvolutionBenefice, {
+            type: 'bar',
+            data: dataEvolutionBenefice,
+            options: { scales: { y: { beginAtZero: true } } }
+        });
+    </script>
+</body>
+</html>

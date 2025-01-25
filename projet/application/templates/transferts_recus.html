@@ -1,0 +1,144 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'application/styles.css' %}">
+    <title>Transferts Reçus - {{ centre.designationc }}</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color:  #336633;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav {
+            background-color:  #336633;
+            overflow: hidden;
+        }
+
+        nav a {
+            float: left;
+            display: block;
+            color: #fff;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        section {
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color:  #336633;
+            color: #fff;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Style du formulaire de recherche */
+        form {
+            margin-top: 20px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        form input {
+            padding: 8px;
+        }
+
+        form button {
+            background-color: #336633;
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #255625;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Transferts Reçus - {{ centre.designationc }}</h1>
+    </header>
+
+    <nav class="nav-agriculture">
+        <a href="{% url 'index' %}">Accueil</a>
+        <a href="{% url 'centre_menu' centre_id=1 %}">Centre 1</a>
+        <a href="{% url 'centre_menu' centre_id=2 %}">Centre 2</a>
+        <a href="{% url 'centre_menu' centre_id=3 %}">Centre 3</a>
+        <a href="{% url 'analyse_ventes' %}">Anylse de ventes </a>
+        <a href="{% url 'top_fournisseurs' %}">top fournisseur </a>
+        <a href="{% url 'ventes_combinees' %}">taux de ventes  </a>
+        ventes-combinees/
+        
+    </nav>
+
+    <section>
+        <h2>Rechercher les Transferts</h2>
+
+        <!-- Formulaire de recherche -->
+        <form method="GET" action="">
+            {{ form.as_p }}
+            <button type="submit">Rechercher</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Liste des Transferts Reçus</h2>
+        <p>Centre : {{ centre.designationc }} (Identifiant : {{ centre.identifiant }})</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Date du Transfert</th>
+                    <th>Quantité</th>
+                    <th>Prix d'Achat</th>
+                    <th>Produit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transfert in transferts_recus %}
+                    <tr>
+                        <td>{{ transfert.datetr }}</td>
+                        <td>{{ transfert.qtetr }}</td>
+                        <td>{{ transfert.prixac }}</td>
+                        <td>{{ transfert.produit_t.designation }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</body>
+</html>

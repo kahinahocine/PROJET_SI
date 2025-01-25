@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'application/styles.css' %}">
+    <title>Ajouter un Produit</title>
+    <link rel="stylesheet" type="text/css" href="">
+
+</head>
+<body>
+    <nav class="nav-agriculture">
+        <a href="{% url 'index' %}">Accueil</a>
+        <a href="{% url 'centre_menu' centre_id=1 %}">Centre 1</a>
+        <a href="{% url 'centre_menu' centre_id=2 %}">Centre 2</a>
+        <a href="{% url 'centre_menu' centre_id=3 %}">Centre 3</a>
+        <a href="{% url 'analyse_ventes' %}">Anylse de ventes </a>
+        <a href="{% url 'top_fournisseurs' %}">top fournisseur </a>
+        <a href="{% url 'ventes_combinees' %}">taux de ventes  </a>
+        ventes-combinees/
+        
+    </nav>
+    <div class="container">
+        <h1>Ajouter un Produit</h1>
+
+        
+        <form method="post" action="{% url 'ajouter_produit' %}">
+            {% csrf_token %}
+            <label for="designation">Désignation:</label>
+            <input type="text" name="designation" required>
+            <label for="prix">Prix:</label>
+            <input type="text" name="prix" required>
+            <button type="submit">Ajouter Produit</button>
+        </form>
+    </div>
+</body>
+</html>

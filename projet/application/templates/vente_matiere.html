@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'application/styles.css' %}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .vente-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .vente-form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .vente-form label {
+      margin-bottom: 8px;
+    }
+
+    .vente-form input {
+      padding: 8px;
+      margin-bottom: 16px;
+    }
+
+    .vente-form button {
+      padding: 10px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .vente-form button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav-agriculture">
+    <a href="{% url 'index' %}">Accueil</a>
+    <a href="{% url 'centre_menu' centre_id=1 %}">Centre 1</a>
+    <a href="{% url 'centre_menu' centre_id=2 %}">Centre 2</a>
+    <a href="{% url 'centre_menu' centre_id=3 %}">Centre 3</a>
+    <a href="{% url 'analyse_ventes' %}">Anylse de ventes </a>
+    <a href="{% url 'top_fournisseurs' %}">top fournisseur </a>
+    <a href="{% url 'ventes_combinees' %}">taux de ventes  </a>
+    ventes-combinees/
+    
+</nav>
+  <div class="vente-container">
+    <h1>Ajouter une vente de matières</h1>
+    <form method="post" class="vente-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Enregistrer la vente</button>
+    </form>
+  </div>
+</body>
+</html>

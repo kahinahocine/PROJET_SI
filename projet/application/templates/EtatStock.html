@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'application/styles.css' %}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f8f8;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .search-form {
+      margin-bottom: 20px;
+    }
+
+    .search-form label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .search-form input, .search-form select, .search-form button {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .search-form button {
+      background-color:#336633;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .results-container {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .results-table th, .results-table td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+
+    .results-table th {
+      background-color: #f2f2f2;
+    }
+
+    .total-value {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav-agriculture">
+    <a href="{% url 'index' %}">Accueil</a>
+    <a href="{% url 'centre_menu' centre_id=1 %}">Centre 1</a>
+    <a href="{% url 'centre_menu' centre_id=2 %}">Centre 2</a>
+    <a href="{% url 'centre_menu' centre_id=3 %}">Centre 3</a>
+    <a href="{% url 'analyse_ventes' %}">Anylse de ventes </a>
+    <a href="{% url 'top_fournisseurs' %}">top fournisseur </a>
+    <a href="{% url 'ventes_combinees' %}">taux de ventes  </a>
+    ventes-combinees/
+    
+</nav>
+  <div class="container">
+    <h1 style="text-align: center;">Etat de Stock</h1>
+
+
+      <!-- Formulaire de recherche -->
+    <form class="search-form form-inline" method="GET" action="{% url 'etat_stock' %}">
+        {% csrf_token %}
+        <label for="fournisseur">Fournisseur:</label>
+        {{ form.fournisseur }}
+        <label for="date_achat">Date d'Achat:</label>
+        {{ form.date_achat }}
+        <label for="nom_produit">Nom du Produit:</label>
+        {{ form.nom_produit }}
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+        <!-- Ajoutez le lien PDF avec le style -->
+        <a href="{% url 'etat_stock' %}?pdf=1" target="_blank" class="print-button">Imprimer / Enregistrer PDF</a>
+    </form>
+
+    <!-- Affichage des résultats -->
+    <div class="results-container">
+      <h3>Résultats de la recherche :</h3>
+
+      {% if produits_en_stock %}
+          <table class="results-table">
+              <thead>
+                  <tr>
+                      <th>Produit</th>
+                      <th>Quantité en Stock</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for produit_en_stock in produits_en_stock %}
+                      <tr>
+                          <td>{{ produit_en_stock.produit.designation }}</td>
+                          <td>{{ produit_en_stock.quantite_en_stock }}</td>
+                      </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      {% else %}
+          <p>Aucun résultat trouvé.</p>
+      {% endif %}
+
+      {% if valeur_totale_stock %}
+          <p class="total-value">Valeur totale du stock : {{ valeur_totale_stock }} €</p>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>

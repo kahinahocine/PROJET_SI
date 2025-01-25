@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'application/styles.css' %}">
+</head>
+<body>
+    <nav class="nav-agriculture">
+        <a href="{% url 'index' %}">Accueil</a>
+        <a href="{% url 'centre_menu' centre_id=1 %}">Centre 1</a>
+        <a href="{% url 'centre_menu' centre_id=2 %}">Centre 2</a>
+        <a href="{% url 'centre_menu' centre_id=3 %}">Centre 3</a>
+        <a href="{% url 'analyse_ventes' %}">Anylse de ventes </a>
+        <a href="{% url 'top_fournisseurs' %}">top fournisseur </a>
+        <a href="{% url 'ventes_combinees' %}">taux de ventes  </a>
+        ventes-combinees/
+        
+    </nav>
+    <h1>Modifier un Client</h1>
+    <form method="post" action="{% url 'modifier_client' client.pk %}">
+        {% csrf_token %}
+        <label for="nomc">Nom:</label>
+        <input type="text" name="nomc" value="{{ client.nomc }}" required>
+        <label for="prenomc">Prénom:</label>
+        <input type="text" name="prenomc" value="{{ client.prenomc }}" required>
+        <label for="adressec">Adresse:</label>
+        <input type="text" name="adressec" value="{{ client.adressec }}" required>
+        <label for="telc">Téléphone:</label>
+        <input type="text" name="telc" value="{{ client.telc }}" required>
+        <label for="creditc">Crédit:</label>
+        <input type="text" name="creditc" value="{{ client.creditc }}" required>
+        <button type="submit">Modifier Client</button>
+    </form>
+
+    <!-- Lien pour Consulter les Clients -->
+    <a href="{% url 'gerer_clients' %}">Retour à la liste des clients</a>
+</body>
+</html>

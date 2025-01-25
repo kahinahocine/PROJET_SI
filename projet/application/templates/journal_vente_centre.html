@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'application/styles.css' %}">
+    <title>Journal des Ventes - Centre {{ centre.designationc }}</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #336633;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        form input,
+        form select,
+        form button {
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #336633;
+            border-radius: 4px;
+        }
+
+        form button {
+            background-color: #336633;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #255625;
+        }
+
+        .ventes-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .vente-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            margin: 10px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .vente-item strong {
+            color: #336633;
+        }
+
+        .total-ventes {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #336633;
+            color: #fff;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-agriculture">
+        <a href="{% url 'index' %}">Accueil</a>
+        <a href="{% url 'centre_menu' centre_id=1 %}">Centre 1</a>
+        <a href="{% url 'centre_menu' centre_id=2 %}">Centre 2</a>
+        <a href="{% url 'centre_menu' centre_id=3 %}">Centre 3</a>
+        <a href="{% url 'analyse_ventes' %}">Anylse de ventes </a>
+        <a href="{% url 'top_fournisseurs' %}">top fournisseur </a>
+        <a href="{% url 'ventes_combinees' %}">taux de ventes  </a>
+        ventes-combinees/
+        
+    </nav>
+    <h1>Journal des Ventes - Centre {{ centre.designationc }}</h1>
+
+    <main>
+        <form method="GET">
+            {{ form.date_vente }}
+            {{ form.client }}
+            {{ form.produit }}
+            <button type="submit">Filtrer</button>
+        </form>
+        
+        <ul class="ventes-list">
+            {% for vente in ventes_centre %}
+                <li class="vente-item">
+                    <strong>Date:</strong> {{ vente.DateV }}<br>
+                    <strong>Client:</strong> {{ vente.clientv.nomc }} {{ vente.clientv.prenomc }} <br>
+                    <strong>Produit:</strong> {{ vente.produitv.designation }}<br>
+                    <strong>Quantité:</strong> {{ vente.qtev }}<br>
+                    <strong>Prix unitaire:</strong> {{ vente.prixv }}<br>
+                    <strong>Montant total:</strong> {{ vente.montant_total_calcule }}<br>
+                    <a href="{% url 'supprimer_vente_centre' centre_id=centre.id vente_id=vente.id %}">Supprimer</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <p class="total-ventes">Valeur totale des ventes : {{ valeur_totale_ventes_centre }} DA</p>
+    </main>
+
+    <!-- Ajoutez d'autres sections ou liens ici si nécessaire -->
+
+</body>
+</html>

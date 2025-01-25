@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'application/styles.css' %}">
+    <title>État du Stock - Centre {{ centre.designationc }}</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #336633;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color:#336633;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-agriculture">
+        <a href="{% url 'index' %}">Accueil</a>
+        <a href="{% url 'centre_menu' centre_id=1 %}">Centre 1</a>
+        <a href="{% url 'centre_menu' centre_id=2 %}">Centre 2</a>
+        <a href="{% url 'centre_menu' centre_id=3 %}">Centre 3</a>
+        <a href="{% url 'analyse_ventes' %}">Anylse de ventes </a>
+        <a href="{% url 'top_fournisseurs' %}">top fournisseur </a>
+        <a href="{% url 'ventes_combinees' %}">taux de ventes  </a>
+        ventes-combinees/
+        
+    </nav>
+
+    <form method="post" action="{% url 'etat_stock_centre' centre.id %}">
+        {% csrf_token %}
+        <button type="submit" name="pdf">Générer PDF</button>
+    </form>
+    
+    <header>
+        <h1>État du Stock - Centre {{ centre.designationc }}</h1>
+    </header>
+
+    <nav>
+        <!-- Ajoutez vos liens de navigation ici -->
+    </nav>
+
+    <section>
+        <h2>Produits en Stock</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Quantité en Stock</th>
+                    <!-- Ajoutez d'autres colonnes si nécessaire -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for produit_en_stock in produits_en_stock_centre %}
+                    <tr>
+                        <td>{{ produit_en_stock.produit_stocke.designation }}</td>
+                        <td>{{ produit_en_stock.quantite_en_stock_centre }}</td>
+                        <!-- Ajoutez d'autres cellules si nécessaire -->
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Ajoutez d'autres sections si nécessaire -->
+
+</body>
+</html>

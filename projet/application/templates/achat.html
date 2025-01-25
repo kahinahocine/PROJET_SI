@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'application/styles.css' %}">
+    <title>Achat de Matières</title>
+   
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #e0f7e0; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c662d; 
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .form-row div {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c662d;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #a1d3a1; 
+            border-radius: 4px;
+        }
+
+        a {
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+            color: #2c662d;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #215a25;
+        }
+
+        button {
+            background-color: #2c662d; 
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #215a25; 
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav-agriculture">
+        <a href="{% url 'index' %}">Accueil</a>
+        <a href="{% url 'centre_menu' centre_id=1 %}">Centre 1</a>
+        <a href="{% url 'centre_menu' centre_id=2 %}">Centre 2</a>
+        <a href="{% url 'centre_menu' centre_id=3 %}">Centre 3</a>
+        <a href="{% url 'analyse_ventes' %}">Anylse de ventes </a>
+        <a href="{% url 'top_fournisseurs' %}">top fournisseur </a>
+        <a href="{% url 'ventes_combinees' %}">taux de ventes  </a>
+        ventes-combinees/
+        
+    </nav>
+    <form method="post" action="{% url 'acheter_matiere' %}">
+        {% csrf_token %}
+        <div class="form-container">
+            <h2>Achat de Matières</h2>
+            <div class="form-row">
+                <div>{{ form.detail.label_tag }} {{ form.detail }}</div>
+                <div>{{ form.qteA.label_tag }} {{ form.qteA }}</div>
+                <div>{{ form.DateA.label_tag }} {{ form.DateA }}</div>
+            </div>
+            <div class="form-row">
+                <div>{{ form.prixH.label_tag }} {{ form.prixH }}</div>
+                <div>{{ form.montantp.label_tag }} {{ form.montantp }}</div>
+                <div>{{ form.fournisseurA.label_tag }} {{ form.fournisseurA }}</div>
+            </div>
+            <div class="form-row">
+                <div>{{ form.produitA.label_tag }} {{ form.produitA }}</div>
+            </div>
+            <a href="{% url 'creer_fournisseur' %}">Créer fournisseur</a>
+            <button type="submit">Acheter</button>
+        </div>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'application/styles.css' %}">
+
+{% extends 'index.html' %}
+
+{% block content %}
+   
+
+    <h2>Nos fonctionnalités</h2>
+    {% if centre_id == 1 %}
+        <a href="{% url 'transferts_recus' centre_id=1 %}">Journal des Transferts</a>
+        <a href="{% url 'etat_stock_centre' centre_id=1 %}">Etat du Stock</a>
+        <a href="{% url 'effectuer_vente_centre' centre_id=centre_id %}">Effectuer une Vente</a>
+    {% elif centre_id == 2 %}
+        <a href="{% url 'transferts_recus' centre_id=2 %}">Journal des Transferts</a>
+        <a href="{% url 'etat_stock_centre' centre_id=2 %}">Etat du Stock</a>
+        <a href="{% url 'effectuer_vente_centre' centre_id=centre_id %}">Effectuer une Vente</a>
+    {% elif centre_id == 3 %}
+        <a href="{% url 'transferts_recus' centre_id=3 %}">Journal des Transferts</a>
+        <a href="{% url 'etat_stock_centre' centre_id=3 %}">Etat du Stock</a>
+        <a href="{% url 'effectuer_vente_centre' centre_id=centre_id %}">Effectuer une Vente</a>
+    {% endif %}
+
+    <!-- Ajoutez les deux boutons pour le journal des produits transférés et l'état du stock -->
+    <a href="{% url 'transferts_recus' centre_id=centre_id %}">Journal des Transferts</a>
+    <a href="{% url 'etat_stock_centre' centre_id=centre_id %}">Etat du Stock</a>
+{% endblock %}
